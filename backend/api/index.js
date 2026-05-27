@@ -1,5 +1,7 @@
 import express from "express";
 import cors from "cors";
+import path from "path";
+import fs from "fs";
 import connectDB from "../config/db.js";
 import { errorHandler } from "../middleware/errorMiddleware.js";
 import adminRoutes from "../routes/adminRoutes.js";
@@ -9,11 +11,17 @@ import galleryRoutes from "../routes/galleryRoutes.js";
 import newsRoutes from "../routes/newsRoutes.js";
 import contactRoutes from "../routes/contactRoutes.js";
 
+const uploadsDir = "/tmp/uploads";
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+}
+
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use("/uploads", express.static(uploadsDir));
 
 app.use("/api/admin", adminRoutes);
 app.use("/api/projects", projectRoutes);
