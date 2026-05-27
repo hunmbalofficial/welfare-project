@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
 import { useForm } from 'react-hook-form';
@@ -10,6 +10,7 @@ import Card from '../../components/ui/Card';
 import Input from '../../components/ui/Input';
 import Button from '../../components/ui/Button';
 import { API_BASE_URL } from '../../utils/constants';
+import { getPublicSetting } from '../../services/settingsService';
 
 const contactSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
@@ -18,16 +19,37 @@ const contactSchema = z.object({
   message: z.string().min(10, 'Message must be at least 10 characters'),
 });
 
-const contactInfo = [
-  { icon: MapPin, title: 'Address', detail: '123 Welfare Street, Islamabad, Pakistan' },
-  { icon: Phone, title: 'Phone', detail: '+92 300 1234567' },
-  { icon: Mail, title: 'Email', detail: 'info@welfareorg.org' },
-  { icon: Clock, title: 'Working Hours', detail: 'Mon - Fri: 9:00 AM - 5:00 PM' },
-];
+
 
 const Contact = () => {
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [contactInfo, setContactInfo] = useState([
+    { icon: MapPin, title: 'Address', key: 'address', detail: '' },
+    { icon: Phone, title: 'Phone', key: 'phone', detail: '' },
+    { icon: Mail, title: 'Email', key: 'email', detail: '' },
+    { icon: Clock, title: 'Working Hours', key: 'workingHours', detail: '' },
+  ]);
+
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const res = await getPublicSetting('contactInfo');
+        if (res.data.value) {
+          const info = res.data.value;
+          setContactInfo((prev) =>
+            prev.map((item) => ({
+              ...item,
+              detail: info[item.key] || item.detail,
+            }))
+          );
+        }
+      } catch {
+        // use defaults
+      }
+    };
+    fetch();
+  }, []);
 
   const {
     register,

@@ -90,29 +90,62 @@ function HomepageForm({ showToast }) {
 }
 
 function ContactForm({ showToast }) {
-  const { register, handleSubmit } = useForm({
-    defaultValues: { phone: '+92 300 1234567', address: '123 Welfare Street, Islamabad, Pakistan', workingHours: 'Mon - Fri: 9:00 AM - 5:00 PM' },
-  });
-
+  const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const handleSave = () => {
+  const [form, setForm] = useState({ phone: '', address: '', workingHours: '', email: '' });
+
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const res = await getSetting('contactInfo');
+        if (res.data.value) setForm(res.data.value);
+      } catch {
+        // ignore
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetch();
+  }, []);
+
+  const handleSave = async () => {
     setSaving(true);
-    setTimeout(() => { showToast('Contact information saved successfully'); setSaving(false); }, 500);
+    try {
+      await updateSetting('contactInfo', form);
+      showToast('Contact information saved successfully');
+    } catch {
+      showToast('Failed to save contact information');
+    } finally {
+      setSaving(false);
+    }
   };
 
+  if (loading) return <div className="text-sm text-gray-400 py-4">Loading...</div>;
+
   return (
-    <form onSubmit={handleSubmit(handleSave)} className="space-y-5">
+    <div className="space-y-5">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <Input label="Phone Number" placeholder="+92 300 1234567" {...register('phone')} />
-        <Input label="Working Hours" placeholder="Mon - Fri: 9:00 AM - 5:00 PM" {...register('workingHours')} />
-        <div className="md:col-span-2">
-          <Input label="Address" placeholder="Enter address" {...register('address')} />
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+          <input className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm focus:border-primary-500 focus:ring-1 focus:ring-primary-500 outline-none" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} placeholder="+92 300 1234567" />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+          <input className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm focus:border-primary-500 focus:ring-1 focus:ring-primary-500 outline-none" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} placeholder="info@example.com" />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Address</label>
+          <input className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm focus:border-primary-500 focus:ring-1 focus:ring-primary-500 outline-none" value={form.address} onChange={(e) => setForm({ ...form, address: e.target.value })} placeholder="123 Welfare Street" />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Working Hours</label>
+          <input className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm focus:border-primary-500 focus:ring-1 focus:ring-primary-500 outline-none" value={form.workingHours} onChange={(e) => setForm({ ...form, workingHours: e.target.value })} placeholder="Mon - Fri: 9:00 AM - 5:00 PM" />
         </div>
       </div>
       <div className="flex justify-end pt-2">
-        <Button type="submit" loading={saving} icon={Save}>Save Settings</Button>
+        <Button onClick={handleSave} loading={saving} icon={Save}>Save Settings</Button>
       </div>
-    </form>
+    </div>
   );
 }
 

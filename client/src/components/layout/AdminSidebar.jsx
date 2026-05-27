@@ -3,13 +3,10 @@ import { motion } from 'framer-motion';
 import {
   Sprout,
   LayoutDashboard,
-  Users,
   Package,
   HandCoins,
-  BarChart3,
   Settings,
-  UserCog,
-  Megaphone,
+  Mail,
   ChevronLeft,
   ChevronRight,
   ExternalLink,
@@ -19,13 +16,10 @@ import useAuth from '../../hooks/useAuth';
 
 const menuItems = [
   { icon: LayoutDashboard, label: 'Dashboard', path: '/admin' },
-  { icon: Users, label: 'Beneficiaries', path: '/admin/beneficiaries' },
   { icon: Package, label: 'Programs', path: '/admin/programs' },
   { icon: HandCoins, label: 'Donations', path: '/admin/donations' },
-  { icon: BarChart3, label: 'Reports', path: '/admin/reports' },
+  { icon: Mail, label: 'Messages', path: '/admin/messages' },
   { icon: Settings, label: 'Settings', path: '/admin/settings' },
-  { icon: UserCog, label: 'Staff Management', path: '/admin/staff' },
-  { icon: Megaphone, label: 'Announcements', path: '/admin/announcements' },
 ];
 
 const AdminSidebar = ({ isOpen, onClose, collapsed, onToggleCollapse }) => {

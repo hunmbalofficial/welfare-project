@@ -1,125 +1,115 @@
+import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { Package, HandCoins, Mail, Settings, TrendingUp, ArrowRight, MessageCircle, Clock } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import {
-  Users,
-  FolderOpen,
-  DollarSign,
-  AlertCircle,
-  TrendingUp,
-  TrendingDown,
-  Plus,
-  FileText,
-  Megaphone,
-  BarChart3,
-} from 'lucide-react';
-import {
-  BarChart,
-  Bar,
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line,
 } from 'recharts';
 import Card from '../../components/ui/Card';
-import Button from '../../components/ui/Button';
 import Badge from '../../components/ui/Badge';
-
-const metrics = [
-  { label: 'Total Beneficiaries', value: '2,847', change: '+12%', up: true, icon: Users },
-  { label: 'Active Programs', value: '18', change: '+3', up: true, icon: FolderOpen },
-  { label: 'Donations This Month', value: 'Rs. 4.2L', change: '+8%', up: true, icon: DollarSign },
-  { label: 'Pending Cases', value: '23', change: '-5%', up: false, icon: AlertCircle },
-];
+import { getProjects } from '../../services/projectService';
+import { getDonations } from '../../services/donationService';
+import { getMessages } from '../../services/contactService';
 
 const barData = [
-  { month: 'Jan', applications: 40 },
-  { month: 'Feb', applications: 55 },
-  { month: 'Mar', applications: 48 },
-  { month: 'Apr', applications: 62 },
-  { month: 'May', applications: 58 },
-  { month: 'Jun', applications: 72 },
+  { month: 'Jan', donations: 40 }, { month: 'Feb', donations: 55 }, { month: 'Mar', donations: 48 },
+  { month: 'Apr', donations: 62 }, { month: 'May', donations: 58 }, { month: 'Jun', donations: 72 },
 ];
 
 const lineData = [
-  { month: 'Jan', amount: 40000 },
-  { month: 'Feb', amount: 55000 },
-  { month: 'Mar', amount: 48000 },
-  { month: 'Apr', amount: 62000 },
-  { month: 'May', amount: 58000 },
-  { month: 'Jun', amount: 72000 },
-];
-
-const recentApps = [
-  { id: 1, name: 'Fatima Ahmed', program: 'Health', date: '2026-05-20', status: 'Approved' },
-  { id: 2, name: 'Muhammad Ali', program: 'Education', date: '2026-05-19', status: 'Pending' },
-  { id: 3, name: 'Ayesha Khan', program: 'Food Aid', date: '2026-05-18', status: 'Review' },
-  { id: 4, name: 'Hassan Raza', program: 'Health', date: '2026-05-17', status: 'Approved' },
-  { id: 5, name: 'Zainab Bibi', program: 'Education', date: '2026-05-16', status: 'Pending' },
-];
-
-const statusVariant = { Approved: 'success', Pending: 'warning', Review: 'info' };
-
-const quickActions = [
-  { label: 'Add Beneficiary', icon: Users },
-  { label: 'New Program', icon: FolderOpen },
-  { label: 'Send Announcement', icon: Megaphone },
-  { label: 'Generate Report', icon: BarChart3 },
+  { month: 'Jan', amount: 40000 }, { month: 'Feb', amount: 55000 }, { month: 'Mar', amount: 48000 },
+  { month: 'Apr', amount: 62000 }, { month: 'May', amount: 58000 }, { month: 'Jun', amount: 72000 },
 ];
 
 function Dashboard() {
+  const [projects, setProjects] = useState([]);
+  const [donations, setDonations] = useState([]);
+  const [messages, setMessages] = useState([]);
+
+  useEffect(() => {
+    getProjects().then((r) => setProjects(r.data)).catch(() => {});
+    getDonations().then((r) => setDonations(r.data)).catch(() => {});
+    getMessages().then((r) => setMessages(r.data)).catch(() => {});
+  }, []);
+
+  const totalDonations = donations.reduce((s, d) => s + (d.amount || 0), 0);
+  const activePrograms = projects.filter((p) => p.status === 'active').length;
+  const unreadMessages = messages.length;
+
+  const stats = [
+    {
+      label: 'Active Programs', value: activePrograms, total: projects.length, icon: Package, color: 'from-emerald-500 to-emerald-600', link: '/admin/programs',
+    },
+    {
+      label: 'Total Donations', value: `Rs. ${totalDonations.toLocaleString()}`, icon: HandCoins, color: 'from-primary-500 to-primary-600', link: '/admin/donations',
+    },
+    {
+      label: 'Messages', value: unreadMessages, icon: Mail, color: 'from-violet-500 to-violet-600', link: '/admin/messages',
+    },
+    {
+      label: 'Programs Created', value: projects.length, icon: TrendingUp, color: 'from-amber-500 to-amber-600', link: '/admin/programs',
+    },
+  ];
+
   return (
     <>
-      <Helmet>
-        <title>Dashboard - WelfareOrg Admin</title>
-      </Helmet>
+      <Helmet><title>Dashboard - WelfareOrg Admin</title></Helmet>
       <div className="space-y-6">
-        <div>
-          <h1 className="font-display text-2xl font-bold text-primary-800">Dashboard</h1>
-          <p className="text-gray-500">Welcome to the admin panel</p>
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="font-display text-2xl font-bold text-primary-800">Dashboard</h1>
+            <p className="text-gray-500">Overview of your welfare organization</p>
+          </div>
+          <Link to="/admin/settings">
+            <Badge variant="info" className="cursor-pointer flex items-center gap-1 px-4 py-2">
+              <Settings size={14} /> Settings
+            </Badge>
+          </Link>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {metrics.map((m) => (
-            <Card key={m.label} className="relative overflow-hidden">
-              <div className="absolute top-0 left-0 right-0 h-[3px] bg-primary-400" />
-              <div className="flex items-start justify-between">
-                <div>
-                  <p className="font-display text-3xl font-bold text-primary-800">{m.value}</p>
-                  <p className="text-sm text-gray-500 mt-1">{m.label}</p>
-                  <span
-                    className={`inline-flex items-center gap-1 text-xs font-medium mt-2 ${
-                      m.up ? 'text-green-600' : 'text-red-600'
-                    }`}
-                  >
-                    {m.up ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
-                    {m.change}
-                  </span>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {stats.map((s) => (
+            <Link key={s.label} to={s.link} className="block group">
+              <Card className="relative overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                <div className={`absolute inset-0 bg-gradient-to-br ${s.color} opacity-5 group-hover:opacity-10 transition-opacity`} />
+                <div className="relative flex items-start justify-between">
+                  <div>
+                    <p className="text-3xl font-bold text-primary-900">{s.value}</p>
+                    <p className="text-sm text-gray-500 mt-1">{s.label}</p>
+                  </div>
+                  <div className={`rounded-xl bg-gradient-to-br ${s.color} p-3 shadow-lg`}>
+                    <s.icon className="h-5 w-5 text-white" />
+                  </div>
                 </div>
-                <div className="rounded-full bg-primary-50 p-3">
-                  <m.icon className="h-6 w-6 text-primary-600" />
+                <div className="mt-3 flex items-center gap-1 text-xs text-primary-600 font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+                  View details <ArrowRight size={12} />
                 </div>
-              </div>
-            </Card>
+              </Card>
+            </Link>
           ))}
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <Card>
-            <h3 className="font-display text-lg font-semibold text-primary-800 mb-4">Applications</h3>
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="font-display text-lg font-semibold text-primary-800">Donations Overview</h3>
+              <Badge variant="success">Monthly</Badge>
+            </div>
             <ResponsiveContainer width="100%" height={280}>
               <BarChart data={barData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
                 <XAxis dataKey="month" tick={{ fontSize: 12 }} />
                 <YAxis tick={{ fontSize: 12 }} />
                 <Tooltip />
-                <Bar dataKey="applications" fill="#3B6D11" radius={[6, 6, 0, 0]} />
+                <Bar dataKey="donations" fill="#3B6D11" radius={[6, 6, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </Card>
           <Card>
-            <h3 className="font-display text-lg font-semibold text-primary-800 mb-4">Donation Trend</h3>
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="font-display text-lg font-semibold text-primary-800">Donation Trend</h3>
+              <Badge variant="info">Revenue</Badge>
+            </div>
             <ResponsiveContainer width="100%" height={280}>
               <LineChart data={lineData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
@@ -134,41 +124,54 @@ function Dashboard() {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <Card className="lg:col-span-2">
-            <h3 className="font-display text-lg font-semibold text-primary-800 mb-4">Recent Applications</h3>
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b border-primary-100 text-left">
-                    <th className="pb-3 font-semibold text-primary-700">Name</th>
-                    <th className="pb-3 font-semibold text-primary-700">Program</th>
-                    <th className="pb-3 font-semibold text-primary-700">Date</th>
-                    <th className="pb-3 font-semibold text-primary-700">Status</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-primary-50">
-                  {recentApps.map((app) => (
-                    <tr key={app.id} className="hover:bg-primary-50/30 transition-colors">
-                      <td className="py-3 text-gray-700">{app.name}</td>
-                      <td className="py-3 text-gray-700">{app.program}</td>
-                      <td className="py-3 text-gray-500">{app.date}</td>
-                      <td className="py-3">
-                        <Badge variant={statusVariant[app.status]}>{app.status}</Badge>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="font-display text-lg font-semibold text-primary-800">Recent Programs</h3>
+              <Link to="/admin/programs" className="text-xs text-primary-600 font-medium hover:underline">View all</Link>
             </div>
+            {projects.length === 0 ? (
+              <div className="text-center text-gray-400 py-8 text-sm">No programs yet</div>
+            ) : (
+              <div className="space-y-3">
+                {projects.slice(0, 5).map((p) => (
+                  <div key={p._id} className="flex items-center justify-between p-3 rounded-lg bg-primary-50/50 hover:bg-primary-50 transition-colors">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-lg bg-primary-100 flex items-center justify-center shrink-0 overflow-hidden">
+                        {p.image ? <img src={p.image} alt="" className="w-full h-full object-cover" /> : <Package size={18} className="text-primary-600" />}
+                      </div>
+                      <div>
+                        <p className="font-medium text-primary-800 text-sm">{p.title}</p>
+                        <p className="text-xs text-gray-500">{p.category || 'General'}</p>
+                      </div>
+                    </div>
+                    <Badge variant={p.status === 'active' ? 'success' : p.status === 'completed' ? 'info' : 'warning'}>{p.status}</Badge>
+                  </div>
+                ))}
+              </div>
+            )}
           </Card>
           <Card>
-            <h3 className="font-display text-lg font-semibold text-primary-800 mb-4">Quick Actions</h3>
-            <div className="space-y-3">
-              {quickActions.map((a) => (
-                <Button key={a.label} variant="secondary" className="w-full justify-start" icon={a.icon}>
-                  {a.label}
-                </Button>
-              ))}
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="font-display text-lg font-semibold text-primary-800">Recent Messages</h3>
+              <Link to="/admin/messages" className="text-xs text-primary-600 font-medium hover:underline">View all</Link>
             </div>
+            {messages.length === 0 ? (
+              <div className="text-center text-gray-400 py-8 text-sm">No messages yet</div>
+            ) : (
+              <div className="space-y-3">
+                {messages.slice(0, 4).map((m) => (
+                  <div key={m._id} className="flex items-start gap-3 p-3 rounded-lg hover:bg-primary-50/50 transition-colors">
+                    <div className="w-9 h-9 rounded-full bg-primary-100 flex items-center justify-center shrink-0">
+                      <MessageCircle size={16} className="text-primary-600" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="font-medium text-primary-800 text-sm truncate">{m.name}</p>
+                      <p className="text-xs text-gray-500 truncate">{m.subject || 'No subject'}</p>
+                    </div>
+                    <Clock size={14} className="text-gray-300 shrink-0 mt-1" />
+                  </div>
+                ))}
+              </div>
+            )}
           </Card>
         </div>
       </div>

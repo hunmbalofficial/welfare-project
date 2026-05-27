@@ -4,8 +4,6 @@ import Hero from '../../components/sections/Hero';
 import Programs from '../../components/sections/Programs';
 import ImpactStats from '../../components/sections/ImpactStats';
 import HowItWorks from '../../components/sections/HowItWorks';
-import Testimonials from '../../components/sections/Testimonials';
-import NewsSection from '../../components/sections/NewsSection';
 import DonateBanner from '../../components/sections/DonateBanner';
 
 const sectionVariants = {
@@ -19,7 +17,7 @@ const sectionVariants = {
 
 const sections = [
   Hero, Programs, ImpactStats, HowItWorks,
-  Testimonials, NewsSection, DonateBanner,
+  DonateBanner,
 ];
 
 const Home = () => {

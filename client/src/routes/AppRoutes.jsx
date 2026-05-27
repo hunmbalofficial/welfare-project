@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import MainLayout from '../layouts/MainLayout';
 import AdminLayout from '../layouts/AdminLayout';
 import ProtectedRoute from './ProtectedRoute';
@@ -18,15 +18,11 @@ import NotFound from '../pages/public/NotFound';
 
 import AdminLogin from '../pages/admin/AdminLogin';
 import Dashboard from '../pages/admin/Dashboard';
-import BeneficiariesPage from '../pages/admin/BeneficiariesPage';
 import ManagePrograms from '../pages/admin/ManagePrograms';
 import ManageDonations from '../pages/admin/ManageDonations';
 import ManageNews from '../pages/admin/ManageNews';
 import ManageMessages from '../pages/admin/ManageMessages';
-import ReportsPage from '../pages/admin/ReportsPage';
 import WebsiteSettingsPage from '../pages/admin/WebsiteSettingsPage';
-import StaffManagementPage from '../pages/admin/StaffManagementPage';
-import AnnouncementsPage from '../pages/admin/AnnouncementsPage';
 
 const AppRoutes = () => {
   const { admin } = useAuth();
@@ -71,6 +67,7 @@ const AppRoutes = () => {
         <Route path="/projects/:id" element={<ProjectDetail />} />
         <Route path="/donate" element={<Donate />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/programs" element={<Navigate to="/projects" replace />} />
       </Route>
 
       <Route path="/admin/login" element={<AdminLogin />} />
@@ -84,15 +81,10 @@ const AppRoutes = () => {
         }
       >
         <Route index element={<Dashboard />} />
-        <Route path="beneficiaries" element={<BeneficiariesPage />} />
         <Route path="programs" element={<ManagePrograms />} />
         <Route path="donations" element={<ManageDonations />} />
-        <Route path="news" element={<ManageNews />} />
         <Route path="messages" element={<ManageMessages />} />
-        <Route path="reports" element={<ReportsPage />} />
         <Route path="settings" element={<WebsiteSettingsPage />} />
-        <Route path="staff" element={<StaffManagementPage />} />
-        <Route path="announcements" element={<AnnouncementsPage />} />
       </Route>
 
       <Route path="*" element={<NotFound />} />

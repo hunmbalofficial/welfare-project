@@ -20,7 +20,6 @@ const itemVariants = {
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [lang, setLang] = useState('EN');
   const location = useLocation();
 
   useEffect(() => {
@@ -74,12 +73,6 @@ const Navbar = () => {
               >
                 Donate Now
               </Link>
-              <button
-                onClick={() => setLang(lang === 'EN' ? 'UR' : 'EN')}
-                className="px-3 py-1.5 rounded-full border border-primary-200 text-primary-700 text-xs font-medium hover:bg-primary-50 transition-colors"
-              >
-                {lang}
-              </button>
             </div>
 
             <button

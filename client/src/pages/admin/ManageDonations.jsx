@@ -297,7 +297,7 @@ function ManageDonations() {
         </Card>
       </div>
 
-      <Modal open={!!deleteModal} onClose={() => setDeleteModal(null)} title="Delete Donation">
+      <Modal isOpen={!!deleteModal} onClose={() => setDeleteModal(null)} title="Delete Donation">
         <p className="text-gray-600 mb-6">
           Are you sure you want to delete <strong>{deleteModal?.donorName}'s</strong> donation of{' '}
           <strong>Rs. {deleteModal?.amount?.toLocaleString()}</strong>?
@@ -308,7 +308,7 @@ function ManageDonations() {
         </div>
       </Modal>
 
-      <Modal open={bulkDeleteModal} onClose={() => setBulkDeleteModal(false)} title="Delete Selected Donations">
+      <Modal isOpen={bulkDeleteModal} onClose={() => setBulkDeleteModal(false)} title="Delete Selected Donations">
         <p className="text-gray-600 mb-6">
           Are you sure you want to delete <strong>{selected.size} donation{selected.size > 1 ? 's' : ''}</strong>?
           This action cannot be undone.
