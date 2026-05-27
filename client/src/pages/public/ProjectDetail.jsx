@@ -18,17 +18,7 @@ const ProjectDetail = () => {
         <meta name="description" content={project?.description || 'View project details'} />
       </Helmet>
 
-      <div className="min-h-screen bg-primary-50/50">
-        <div className="bg-white border-b border-primary-100">
-          <div className="container-custom py-4">
-            <Link to="/projects" className="inline-flex items-center gap-2 text-primary-600 hover:text-primary-700 font-medium transition-colors group">
-              <span className="rounded-full bg-primary-50 p-1.5 group-hover:bg-primary-100 transition-colors">
-                <ArrowLeft size={16} />
-              </span>
-              Back to Projects
-            </Link>
-          </div>
-        </div>
+      <div className="min-h-screen bg-primary-50/50 pt-8">
 
         <section className="py-10 md:py-14">
           <div className="container-custom">
@@ -61,6 +51,9 @@ const ProjectDetail = () => {
 
             {!loading && !error && project && (
               <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
+                <Link to="/projects" className="inline-flex items-center gap-1.5 text-sm text-primary-600 hover:text-primary-700 mb-6 transition-colors">
+                  <ArrowLeft size={14} /> Back to Projects
+                </Link>
                 <ProjectDetails project={project} />
               </motion.div>
             )}
