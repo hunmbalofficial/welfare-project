@@ -1,7 +1,12 @@
-import { Routes, Route } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import MainLayout from '../layouts/MainLayout';
 import AdminLayout from '../layouts/AdminLayout';
 import ProtectedRoute from './ProtectedRoute';
+import useAuth from '../hooks/useAuth';
+import { getPublicSetting } from '../services/settingsService';
+import MaintenancePage from '../pages/public/MaintenancePage';
+import Loader from '../components/ui/Loader';
 
 import Home from '../pages/public/Home';
 import About from '../pages/public/About';
@@ -24,6 +29,39 @@ import StaffManagementPage from '../pages/admin/StaffManagementPage';
 import AnnouncementsPage from '../pages/admin/AnnouncementsPage';
 
 const AppRoutes = () => {
+  const { admin } = useAuth();
+  const [maintenance, setMaintenance] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const location = useLocation();
+
+  useEffect(() => {
+    const check = async () => {
+      try {
+        const res = await getPublicSetting('underMaintenance');
+        setMaintenance(res.data.value === true);
+      } catch {
+        setMaintenance(false);
+      } finally {
+        setLoading(false);
+      }
+    };
+    check();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-primary-900">
+        <Loader size="lg" />
+      </div>
+    );
+  }
+
+  const isAdminLogin = location.pathname === '/admin/login';
+
+  if (maintenance && !admin && !isAdminLogin) {
+    return <MaintenancePage />;
+  }
+
   return (
     <Routes>
       <Route element={<MainLayout />}>
