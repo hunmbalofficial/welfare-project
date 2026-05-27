@@ -1,8 +1,5 @@
 import express from "express";
 import cors from "cors";
-import path from "path";
-import fs from "fs";
-import { fileURLToPath } from "url";
 import connectDB from "../config/db.js";
 import { errorHandler } from "../middleware/errorMiddleware.js";
 import adminRoutes from "../routes/adminRoutes.js";
@@ -12,20 +9,11 @@ import galleryRoutes from "../routes/galleryRoutes.js";
 import newsRoutes from "../routes/newsRoutes.js";
 import contactRoutes from "../routes/contactRoutes.js";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const uploadsDir = path.join(__dirname, "..", "uploads");
-if (!fs.existsSync(uploadsDir)) {
-  fs.mkdirSync(uploadsDir, { recursive: true });
-}
-
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use("/uploads", express.static(uploadsDir));
 
 app.use("/api/admin", adminRoutes);
 app.use("/api/projects", projectRoutes);
@@ -35,17 +23,7 @@ app.use("/api/news", newsRoutes);
 app.use("/api/contact", contactRoutes);
 
 app.get("/api", (req, res) => {
-  res.json({
-    message: "Hope Foundation API is running",
-    endpoints: {
-      admin: "/api/admin/login",
-      projects: "/api/projects",
-      donations: "/api/donations",
-      gallery: "/api/gallery",
-      news: "/api/news",
-      contact: "/api/contact",
-    },
-  });
+  res.json({ message: "Hope Foundation API is running" });
 });
 
 app.get("/", (req, res) => {
@@ -54,15 +32,15 @@ app.get("/", (req, res) => {
 
 app.use(errorHandler);
 
-let dbConnected = false;
+let ready = false;
 
 export default async (req, res) => {
-  if (!dbConnected) {
+  if (!ready) {
     try {
       await connectDB();
-      dbConnected = true;
+      ready = true;
     } catch (err) {
-      console.error("DB connection failed:", err.message);
+      console.error("DB error:", err.message);
     }
   }
   app(req, res);
