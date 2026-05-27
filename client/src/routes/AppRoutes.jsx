@@ -14,7 +14,6 @@ import NotFound from '../pages/public/NotFound';
 import AdminLogin from '../pages/admin/AdminLogin';
 import Dashboard from '../pages/admin/Dashboard';
 import BeneficiariesPage from '../pages/admin/BeneficiariesPage';
-import ApplicationsPage from '../pages/admin/ApplicationsPage';
 import ManagePrograms from '../pages/admin/ManagePrograms';
 import ManageDonations from '../pages/admin/ManageDonations';
 import ManageNews from '../pages/admin/ManageNews';
@@ -48,7 +47,6 @@ const AppRoutes = () => {
       >
         <Route index element={<Dashboard />} />
         <Route path="beneficiaries" element={<BeneficiariesPage />} />
-        <Route path="applications" element={<ApplicationsPage />} />
         <Route path="programs" element={<ManagePrograms />} />
         <Route path="donations" element={<ManageDonations />} />
         <Route path="news" element={<ManageNews />} />

@@ -8,6 +8,7 @@ import donationRoutes from "../routes/donationRoutes.js";
 import galleryRoutes from "../routes/galleryRoutes.js";
 import newsRoutes from "../routes/newsRoutes.js";
 import contactRoutes from "../routes/contactRoutes.js";
+import settingRoutes from "../routes/settingRoutes.js";
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use("/api/donations", donationRoutes);
 app.use("/api/gallery", galleryRoutes);
 app.use("/api/news", newsRoutes);
 app.use("/api/contact", contactRoutes);
+app.use("/api/settings", settingRoutes);
 
 app.get("/api", (req, res) => {
   res.json({ message: "Hope Foundation API is running" });

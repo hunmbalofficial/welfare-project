@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { DollarSign, TrendingUp, Users, Award, Trash2, RefreshCw, Search, CheckSquare, Square, Download } from 'lucide-react';
+import { DollarSign, TrendingUp, Users, Award, Trash2, RefreshCw, Search, CheckSquare, Square, Download, CheckCircle } from 'lucide-react';
 import Card from '../../components/ui/Card';
 import Badge from '../../components/ui/Badge';
 import Button from '../../components/ui/Button';
@@ -27,6 +27,9 @@ function ManageDonations() {
   const [deleting, setDeleting] = useState(false);
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
+  const [toast, setToast] = useState(null);
+
+  const showToast = (msg) => { setToast(msg); setTimeout(() => setToast(null), 3000); };
 
   const fetchDonations = async () => {
     setLoading(true);
@@ -81,8 +84,9 @@ function ManageDonations() {
       setDonations((prev) => prev.filter((d) => d._id !== deleteModal._id));
       setSelected((prev) => { const n = new Set(prev); n.delete(deleteModal._id); return n; });
       setDeleteModal(null);
+      showToast('Donation deleted successfully');
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to delete donation');
+      showToast(err.response?.data?.message || 'Failed to delete donation');
     } finally {
       setDeleting(false);
     }
@@ -95,8 +99,9 @@ function ManageDonations() {
       setDonations((prev) => prev.filter((d) => !selected.has(d._id)));
       setSelected(new Set());
       setBulkDeleteModal(false);
+      showToast(`${selected.size} donation${selected.size > 1 ? 's' : ''} deleted successfully`);
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to delete donations');
+      showToast(err.response?.data?.message || 'Failed to delete donations');
     } finally {
       setDeleting(false);
     }
@@ -125,6 +130,13 @@ function ManageDonations() {
   return (
     <>
       <Helmet><title>Donations - WelfareOrg Admin</title></Helmet>
+
+      {toast && (
+        <div className="fixed top-4 right-4 z-50 flex items-center gap-2 bg-green-50 border border-green-200 text-green-700 px-5 py-3 rounded-lg shadow-lg text-sm font-medium">
+          <CheckCircle className="w-4 h-4" /> {toast}
+        </div>
+      )}
+
       <div className="space-y-6">
         <div className="flex items-center justify-between flex-wrap gap-4">
           <div>

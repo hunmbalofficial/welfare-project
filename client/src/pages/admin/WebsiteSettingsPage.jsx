@@ -1,16 +1,18 @@
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useForm } from 'react-hook-form';
-import { Save, Globe, Share2, Home, Smartphone, Building2, CheckCircle } from 'lucide-react';
+import { Save, Globe, Share2, Home, Smartphone, Building2, CheckCircle, Wrench } from 'lucide-react';
 import Button from '../../components/ui/Button';
 import Card from '../../components/ui/Card';
 import Input from '../../components/ui/Input';
+import { getSetting, updateSetting } from '../../services/settingsService';
 
 const tabs = [
   { id: 'general', label: 'General', icon: Building2 },
   { id: 'social', label: 'Social Media', icon: Share2 },
   { id: 'homepage', label: 'Homepage', icon: Home },
   { id: 'contact', label: 'Contact Info', icon: Smartphone },
+  { id: 'maintenance', label: 'Maintenance', icon: Wrench },
 ];
 
 function GeneralSettingsForm({ showToast }) {
@@ -18,12 +20,10 @@ function GeneralSettingsForm({ showToast }) {
     defaultValues: { orgName: 'WelfareOrg', tagline: 'Bringing Hope to Those in Need', email: 'info@welfareorg.org' },
   });
 
-  const onSubmit = () => showToast('General settings saved successfully');
   const [saving, setSaving] = useState(false);
-
   const handleSave = async (data) => {
     setSaving(true);
-    setTimeout(() => { onSubmit(data); setSaving(false); }, 500);
+    setTimeout(() => { showToast('General settings saved successfully'); setSaving(false); }, 500);
   };
 
   return (
@@ -116,6 +116,76 @@ function ContactForm({ showToast }) {
   );
 }
 
+function MaintenanceForm({ showToast }) {
+  const [enabled, setEnabled] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const res = await getSetting('underMaintenance');
+        setEnabled(res.data.value === true);
+      } catch {
+        // ignore
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetch();
+  }, []);
+
+  const toggle = async () => {
+    setSaving(true);
+    try {
+      const newVal = !enabled;
+      await updateSetting('underMaintenance', newVal);
+      setEnabled(newVal);
+      showToast(newVal ? 'Maintenance mode enabled' : 'Maintenance mode disabled');
+    } catch {
+      showToast('Failed to update maintenance mode');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  if (loading) return <div className="text-sm text-gray-400 py-4">Loading...</div>;
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between p-5 rounded-xl border border-primary-200 bg-white">
+        <div>
+          <h4 className="font-semibold text-primary-800">Under Maintenance</h4>
+          <p className="text-sm text-gray-500 mt-1">
+            When enabled, visitors will see a maintenance page instead of the website.
+            Admins can still log in and access the dashboard.
+          </p>
+        </div>
+        <button
+          onClick={toggle}
+          disabled={saving}
+          className={`relative inline-flex h-7 w-12 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 focus:outline-none ${
+            enabled ? 'bg-primary-600' : 'bg-gray-200'
+          }`}
+        >
+          <span
+            className={`inline-block h-6 w-6 transform rounded-full bg-white shadow-sm ring-0 transition duration-200 ${
+              enabled ? 'translate-x-5' : 'translate-x-0'
+            }`}
+          />
+        </button>
+      </div>
+      <div className={`rounded-xl border p-5 ${enabled ? 'bg-amber-50 border-amber-200' : 'bg-green-50 border-green-200'}`}>
+        <p className={`text-sm font-medium ${enabled ? 'text-amber-700' : 'text-green-700'}`}>
+          {enabled
+            ? '⚠️ Your website is currently in maintenance mode. Only you and other admins can access the site.'
+            : '✅ Website is live and accessible to everyone.'}
+        </p>
+      </div>
+    </div>
+  );
+}
+
 function WebsiteSettingsPage() {
   const [activeTab, setActiveTab] = useState('general');
   const [toast, setToast] = useState(null);
@@ -130,6 +200,39 @@ function WebsiteSettingsPage() {
     social: <SocialMediaForm showToast={showToast} />,
     homepage: <HomepageForm showToast={showToast} />,
     contact: <ContactForm showToast={showToast} />,
+    maintenance: <MaintenanceForm showToast={showToast} />,
+  };
+
+  const tabIcons = {
+    general: 'bg-primary-50',
+    social: 'bg-blue-50',
+    homepage: 'bg-amber-50',
+    contact: 'bg-green-50',
+    maintenance: 'bg-purple-50',
+  };
+
+  const tabColors = {
+    general: 'text-primary-600',
+    social: 'text-blue-600',
+    homepage: 'text-amber-600',
+    contact: 'text-green-600',
+    maintenance: 'text-purple-600',
+  };
+
+  const iconMap = {
+    general: Building2,
+    social: Share2,
+    homepage: Home,
+    contact: Smartphone,
+    maintenance: Wrench,
+  };
+
+  const tabDescriptions = {
+    general: 'Update your organization name, tagline, and email',
+    social: 'Manage social media profile links',
+    homepage: 'Edit homepage hero and call-to-action content',
+    contact: 'Update phone, address, and working hours',
+    maintenance: 'Enable or disable maintenance mode',
   };
 
   return (
@@ -168,26 +271,14 @@ function WebsiteSettingsPage() {
 
         <Card>
           <div className="flex items-center gap-3 mb-6">
-            <div className={`p-2.5 rounded-lg ${
-              activeTab === 'general' ? 'bg-primary-50' :
-              activeTab === 'social' ? 'bg-blue-50' :
-              activeTab === 'homepage' ? 'bg-amber-50' : 'bg-green-50'
-            }`}>
-              {activeTab === 'general' && <Building2 className="w-5 h-5 text-primary-600" />}
-              {activeTab === 'social' && <Share2 className="w-5 h-5 text-blue-600" />}
-              {activeTab === 'homepage' && <Home className="w-5 h-5 text-amber-600" />}
-              {activeTab === 'contact' && <Smartphone className="w-5 h-5 text-green-600" />}
+            <div className={`p-2.5 rounded-lg ${tabIcons[activeTab]}`}>
+              {React.createElement(iconMap[activeTab], { className: `w-5 h-5 ${tabColors[activeTab]}` })}
             </div>
             <div>
               <h3 className="font-display text-lg font-semibold text-primary-800">
                 {tabs.find((t) => t.id === activeTab)?.label} Settings
               </h3>
-              <p className="text-xs text-gray-400">
-                {activeTab === 'general' && 'Update your organization name, tagline, and email'}
-                {activeTab === 'social' && 'Manage social media profile links'}
-                {activeTab === 'homepage' && 'Edit homepage hero and call-to-action content'}
-                {activeTab === 'contact' && 'Update phone, address, and working hours'}
-              </p>
+              <p className="text-xs text-gray-400">{tabDescriptions[activeTab]}</p>
             </div>
           </div>
           {tabContent[activeTab]}

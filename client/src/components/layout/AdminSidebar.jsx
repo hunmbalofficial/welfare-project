@@ -4,7 +4,6 @@ import {
   Sprout,
   LayoutDashboard,
   Users,
-  FileText,
   Package,
   HandCoins,
   BarChart3,
@@ -21,7 +20,6 @@ import useAuth from '../../hooks/useAuth';
 const menuItems = [
   { icon: LayoutDashboard, label: 'Dashboard', path: '/admin' },
   { icon: Users, label: 'Beneficiaries', path: '/admin/beneficiaries' },
-  { icon: FileText, label: 'Applications', path: '/admin/applications' },
   { icon: Package, label: 'Programs', path: '/admin/programs' },
   { icon: HandCoins, label: 'Donations', path: '/admin/donations' },
   { icon: BarChart3, label: 'Reports', path: '/admin/reports' },
