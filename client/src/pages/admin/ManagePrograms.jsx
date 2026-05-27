@@ -8,6 +8,7 @@ import Input from '../../components/ui/Input';
 import Modal from '../../components/ui/Modal';
 import Loader from '../../components/ui/Loader';
 import * as projectService from '../../services/projectService';
+import { API_ORIGIN } from '../../utils/constants';
 
 const statusVariant = { active: 'success', completed: 'info', upcoming: 'warning', onhold: 'danger' };
 const statusOptions = ['active', 'completed', 'upcoming', 'onhold'];
@@ -255,7 +256,7 @@ function ManagePrograms() {
                 }`}>
                   <div className="relative">
                     {p.image ? (
-                      <img src={`http://localhost:5000${p.image}`} alt={p.title} className="w-full h-40 object-cover" />
+                      <img src={p.image.startsWith('http') ? p.image : `${API_ORIGIN}${p.image}`} alt={p.title} className="w-full h-40 object-cover" />
                     ) : (
                       <div className="w-full h-40 bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center">
                         <ImageOff size={36} className="text-primary-300" />

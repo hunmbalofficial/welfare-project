@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
 import useFetch from '../../hooks/useFetch';
 import * as projectService from '../../services/projectService';
+import { API_ORIGIN } from '../../services/api';
 import Card from '../../components/ui/Card';
 import Badge from '../../components/ui/Badge';
 import Loader from '../../components/ui/Loader';
@@ -96,7 +97,7 @@ const Projects = () => {
                     <Card hover className="overflow-hidden p-0">
                       {project.image ? (
                         <img
-                          src={project.image.startsWith('http') ? project.image : `http://localhost:5000${project.image}`}
+                          src={project.image.startsWith('http') ? project.image : `${API_ORIGIN}${project.image}`}
                           alt={project.title}
                           className="w-full h-48 object-cover"
                         />

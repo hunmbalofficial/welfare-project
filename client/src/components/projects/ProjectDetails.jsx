@@ -1,8 +1,7 @@
 import { motion } from 'framer-motion';
 import { Calendar, Target, HandCoins, TrendingUp, Clock } from 'lucide-react';
 import { Link } from 'react-router-dom';
-
-const API_BASE = 'http://localhost:5000';
+import { API_ORIGIN } from '../../utils/constants';
 
 const ProjectDetails = ({ project }) => {
   const progress = project.targetAmount > 0
@@ -10,7 +9,7 @@ const ProjectDetails = ({ project }) => {
     : 0;
 
   const imageSrc = project.image && !project.image.startsWith('http')
-    ? `${API_BASE}${project.image}`
+    ? `${API_ORIGIN}${project.image}`
     : project.image || 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80';
 
   return (

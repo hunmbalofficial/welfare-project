@@ -5,6 +5,7 @@ import Button from '../../components/ui/Button';
 import Modal from '../../components/ui/Modal';
 import Loader from '../../components/ui/Loader';
 import * as galleryService from '../../services/galleryService';
+import { API_ORIGIN } from '../../utils/constants';
 
 const ITEMS_PER_PAGE = 12;
 
@@ -181,7 +182,7 @@ function ManageGallery() {
                     </button>
                     <div className="aspect-square overflow-hidden bg-primary-50">
                       {img.image ? (
-                        <img src={`http://localhost:5000${img.image}`} alt={img.caption || 'Gallery'} className="w-full h-full object-cover" />
+                        <img src={img.image.startsWith('http') ? img.image : `${API_ORIGIN}${img.image}`} alt={img.caption || 'Gallery'} className="w-full h-full object-cover" />
                       ) : (
                         <div className="w-full h-full bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center">
                           <Image className="h-10 w-10 text-primary-300" />
