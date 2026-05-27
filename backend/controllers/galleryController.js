@@ -1,10 +1,5 @@
 import Gallery from "../models/Gallery.js";
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import { cloudinary } from "../config/cloudinary.js";
 
 const getImages = async (req, res) => {
   try {
@@ -22,7 +17,7 @@ const uploadImage = async (req, res) => {
     }
 
     const image = await Gallery.create({
-      image: `/uploads/${req.file.filename}`,
+      image: req.file.path,
       caption: req.body.caption || "",
     });
 
@@ -37,8 +32,8 @@ const deleteImage = async (req, res) => {
     const image = await Gallery.findById(req.params.id);
     if (!image) return res.status(404).json({ message: "Image not found" });
 
-    const imagePath = path.join(__dirname, "..", image.image);
-    if (fs.existsSync(imagePath)) fs.unlinkSync(imagePath);
+    const publicId = image.image.split("/").slice(-2).join("/").replace(/\.[^.]+$/, "");
+    await cloudinary.uploader.destroy(publicId);
 
     await image.deleteOne();
     res.json({ message: "Image removed" });

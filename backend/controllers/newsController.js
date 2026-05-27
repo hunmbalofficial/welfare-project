@@ -1,10 +1,5 @@
 import News from "../models/NewsUpdate.js";
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import { cloudinary } from "../config/cloudinary.js";
 
 const getNews = async (req, res) => {
   try {
@@ -28,7 +23,7 @@ const getNewsItem = async (req, res) => {
 const createNews = async (req, res) => {
   try {
     const { title, content } = req.body;
-    const image = req.file ? `/uploads/${req.file.filename}` : "";
+    const image = req.file ? req.file.path : "";
 
     if (!title || !content) {
       return res.status(400).json({ message: "Title and content are required" });
@@ -51,10 +46,10 @@ const updateNews = async (req, res) => {
 
     if (req.file) {
       if (news.image) {
-        const oldPath = path.join(__dirname, "..", news.image);
-        if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+        const publicId = news.image.split("/").slice(-2).join("/").replace(/\.[^.]+$/, "");
+        await cloudinary.uploader.destroy(publicId);
       }
-      news.image = `/uploads/${req.file.filename}`;
+      news.image = req.file.path;
     }
 
     const updated = await news.save();
@@ -70,8 +65,8 @@ const deleteNews = async (req, res) => {
     if (!news) return res.status(404).json({ message: "News not found" });
 
     if (news.image) {
-      const imagePath = path.join(__dirname, "..", news.image);
-      if (fs.existsSync(imagePath)) fs.unlinkSync(imagePath);
+      const publicId = news.image.split("/").slice(-2).join("/").replace(/\.[^.]+$/, "");
+      await cloudinary.uploader.destroy(publicId);
     }
 
     await news.deleteOne();

@@ -1,10 +1,5 @@
 import Project from "../models/Project.js";
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import { cloudinary } from "../config/cloudinary.js";
 
 const getProjects = async (req, res) => {
   try {
@@ -28,7 +23,7 @@ const getProject = async (req, res) => {
 const createProject = async (req, res) => {
   try {
     const { title, description, targetAmount, collectedAmount, category, status } = req.body;
-    const image = req.file ? `/uploads/${req.file.filename}` : "";
+    const image = req.file ? req.file.path : "";
 
     const project = await Project.create({
       title,
@@ -62,10 +57,10 @@ const updateProject = async (req, res) => {
 
     if (req.file) {
       if (project.image) {
-        const oldPath = path.join(__dirname, "..", project.image);
-        if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+        const publicId = project.image.split("/").slice(-2).join("/").replace(/\.[^.]+$/, "");
+        await cloudinary.uploader.destroy(publicId);
       }
-      project.image = `/uploads/${req.file.filename}`;
+      project.image = req.file.path;
     }
 
     const updated = await project.save();
@@ -81,8 +76,8 @@ const deleteProject = async (req, res) => {
     if (!project) return res.status(404).json({ message: "Project not found" });
 
     if (project.image) {
-      const imagePath = path.join(__dirname, "..", project.image);
-      if (fs.existsSync(imagePath)) fs.unlinkSync(imagePath);
+      const publicId = project.image.split("/").slice(-2).join("/").replace(/\.[^.]+$/, "");
+      await cloudinary.uploader.destroy(publicId);
     }
 
     await project.deleteOne();
