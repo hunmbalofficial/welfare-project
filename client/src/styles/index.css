@@ -5,16 +5,16 @@
 @tailwind utilities;
 
 :root {
-  --color-primary-950: #071A2E;
-  --color-primary-900: #0B2A47;
-  --color-primary-800: #10426B;
-  --color-primary-700: #155A94;
-  --color-primary-600: #1A72B8;
-  --color-primary-500: #2B86C5;
-  --color-primary-400: #4F9AD6;
-  --color-primary-200: #C5DFF5;
-  --color-primary-100: #EAF2FB;
-  --color-primary-50: #F5F7FF;
+  --color-primary-950: #082310;
+  --color-primary-900: #0D381B;
+  --color-primary-800: #145229;
+  --color-primary-700: #1A6B35;
+  --color-primary-600: #2E9B4E;
+  --color-primary-500: #4AAD68;
+  --color-primary-400: #6DBF86;
+  --color-primary-200: #D0EDD9;
+  --color-primary-100: #EAF5EE;
+  --color-primary-50: #F7FBF8;
   --color-neutral-900: #1a1a1a;
   --color-neutral-700: #3d3d3d;
   --color-neutral-500: #6b6b6b;
@@ -22,9 +22,9 @@
   --color-neutral-100: #f5f5f5;
   --color-neutral-50: #fafafa;
   --color-success: #2E9B4E;
-  --color-warning: #F4A320;
-  --color-danger: #D92B2B;
-  --color-info: #1A72B8;
+  --color-warning: #BA7517;
+  --color-danger: #A32D2D;
+  --color-info: #2E9B4E;
   --text-primary: #1a1a1a;
   --text-secondary: #3d3d3d;
   --text-muted: #6b6b6b;
@@ -72,7 +72,7 @@
 
   .card-hover:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 32px rgba(21, 90, 148, 0.12);
+    box-shadow: 0 12px 32px rgba(26, 107, 53, 0.12);
   }
 
   .fade-up {

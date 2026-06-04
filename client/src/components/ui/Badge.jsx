@@ -2,7 +2,7 @@ const variantStyles = {
   success: 'bg-primary-100 text-primary-700',
   warning: 'bg-amber-100 text-amber-700',
   danger: 'bg-red-100 text-red-700',
-  info: 'bg-blue-100 text-blue-700',
+  info: 'bg-primary-100 text-primary-700',
   neutral: 'bg-gray-100 text-gray-700',
 };
 

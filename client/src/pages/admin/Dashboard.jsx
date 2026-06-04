@@ -38,16 +38,16 @@ function Dashboard() {
 
   const stats = [
     {
-      label: 'Active Programs', value: activePrograms, total: projects.length, icon: Package, color: 'from-emerald-500 to-emerald-600', link: '/admin/programs',
+      label: 'Active Programs', value: activePrograms, total: projects.length, icon: Package, color: 'from-primary-500 to-primary-600', link: '/admin/programs',
     },
     {
       label: 'Total Donations', value: `Rs. ${totalDonations.toLocaleString()}`, icon: HandCoins, color: 'from-primary-500 to-primary-600', link: '/admin/donations',
     },
     {
-      label: 'Messages', value: unreadMessages, icon: Mail, color: 'from-violet-500 to-violet-600', link: '/admin/messages',
+      label: 'Messages', value: unreadMessages, icon: Mail, color: 'from-primary-500 to-primary-600', link: '/admin/messages',
     },
     {
-      label: 'Programs Created', value: projects.length, icon: TrendingUp, color: 'from-amber-500 to-amber-600', link: '/admin/programs',
+      label: 'Programs Created', value: projects.length, icon: TrendingUp, color: 'from-primary-500 to-primary-600', link: '/admin/programs',
     },
   ];
 
@@ -101,7 +101,7 @@ function Dashboard() {
                 <XAxis dataKey="month" tick={{ fontSize: 12 }} />
                 <YAxis tick={{ fontSize: 12 }} />
                 <Tooltip />
-                <Bar dataKey="donations" fill="#1A72B8" radius={[6, 6, 0, 0]} />
+                <Bar dataKey="donations" fill="#2E9B4E" radius={[6, 6, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </Card>
@@ -116,7 +116,7 @@ function Dashboard() {
                 <XAxis dataKey="month" tick={{ fontSize: 12 }} />
                 <YAxis tick={{ fontSize: 12 }} />
                 <Tooltip />
-                <Line type="monotone" dataKey="amount" stroke="#1A72B8" strokeWidth={2} dot={{ fill: '#1A72B8' }} />
+                <Line type="monotone" dataKey="amount" stroke="#2E9B4E" strokeWidth={2} dot={{ fill: '#2E9B4E' }} />
               </LineChart>
             </ResponsiveContainer>
           </Card>

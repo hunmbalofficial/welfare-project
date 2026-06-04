@@ -43,7 +43,7 @@ const appsOverTime = [
   { month: 'May', apps: 48 }, { month: 'Jun', apps: 62 },
 ];
 
-const COLORS = ['#1A72B8', '#2B86C5', '#4F9AD6', '#8DBFE8', '#C5DFF5'];
+const COLORS = ['#2E9B4E', '#4AAD68', '#6DBF86', '#A8DCB7', '#D0EDD9'];
 
 function ReportsPage() {
   const [dateFrom, setDateFrom] = useState('2026-01-01');
@@ -94,7 +94,7 @@ function ReportsPage() {
                 <XAxis dataKey="month" tick={{ fontSize: 12 }} />
                 <YAxis tick={{ fontSize: 12 }} />
                 <Tooltip />
-                <Line type="monotone" dataKey="amount" stroke="#1A72B8" strokeWidth={2} dot={{ fill: '#1A72B8' }} />
+                <Line type="monotone" dataKey="amount" stroke="#2E9B4E" strokeWidth={2} dot={{ fill: '#2E9B4E' }} />
               </LineChart>
             </ResponsiveContainer>
           </Card>
@@ -120,7 +120,7 @@ function ReportsPage() {
                 <XAxis dataKey="name" tick={{ fontSize: 12 }} />
                 <YAxis tick={{ fontSize: 12 }} />
                 <Tooltip />
-                <Bar dataKey="count" fill="#1A72B8" radius={[6, 6, 0, 0]} />
+                <Bar dataKey="count" fill="#2E9B4E" radius={[6, 6, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </Card>
@@ -133,7 +133,7 @@ function ReportsPage() {
                 <XAxis dataKey="month" tick={{ fontSize: 12 }} />
                 <YAxis tick={{ fontSize: 12 }} />
                 <Tooltip />
-                <Area type="monotone" dataKey="apps" stroke="#1A72B8" fill="#8DBFE8" strokeWidth={2} />
+                <Area type="monotone" dataKey="apps" stroke="#2E9B4E" fill="#A8DCB7" strokeWidth={2} />
               </AreaChart>
             </ResponsiveContainer>
           </Card>

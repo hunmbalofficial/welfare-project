@@ -191,13 +191,13 @@ function ManagePrograms() {
             </div>
           </Card>
           <Card className="relative overflow-hidden">
-            <div className="absolute top-0 left-0 right-0 h-[3px] bg-amber-400" />
+            <div className="absolute top-0 left-0 right-0 h-[3px] bg-primary-500" />
             <div className="flex items-start justify-between">
               <div>
                 <p className="font-display text-xl font-bold text-primary-800">Rs. {totalCollected.toLocaleString()}</p>
                 <p className="text-sm text-gray-500 mt-1">Of Rs. {totalTarget.toLocaleString()} Raised</p>
               </div>
-              <div className="rounded-full bg-amber-50 p-3"><DollarSign className="h-5 w-5 text-amber-600" /></div>
+              <div className="rounded-full bg-primary-50 p-3"><DollarSign className="h-5 w-5 text-primary-600" /></div>
             </div>
           </Card>
         </div>
@@ -288,7 +288,7 @@ function ManagePrograms() {
                     <div className="flex items-center justify-between pt-3 border-t border-primary-100">
                       <span className="text-xs text-gray-400 bg-primary-50 px-2.5 py-1 rounded-full">{p.category || 'General'}</span>
                       <div className="flex items-center gap-1">
-                        <button onClick={() => openEdit(p)} className="rounded-full p-1.5 text-blue-600 hover:bg-blue-50 transition-colors" title="Edit">
+                        <button onClick={() => openEdit(p)} className="rounded-full p-1.5 text-primary-600 hover:bg-primary-50 transition-colors" title="Edit">
                           <Pencil className="h-4 w-4" />
                         </button>
                         <button onClick={() => { setDeleteTarget(p); setShowDeleteModal(true); }} className="rounded-full p-1.5 text-red-500 hover:bg-red-50 transition-colors" title="Delete">

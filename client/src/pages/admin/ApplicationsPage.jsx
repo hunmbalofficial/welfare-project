@@ -46,7 +46,7 @@ const rejectedApps = [
 
 const columns = [
   { title: 'Pending', data: pendingApps, color: 'bg-amber-100 text-amber-700' },
-  { title: 'Review', data: reviewApps, color: 'bg-blue-100 text-blue-700' },
+  { title: 'Review', data: reviewApps, color: 'bg-primary-100 text-primary-700' },
   { title: 'Approved', data: approvedApps, color: 'bg-green-100 text-green-700' },
   { title: 'Rejected', data: rejectedApps, color: 'bg-red-100 text-red-700' },
 ];

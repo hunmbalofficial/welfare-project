@@ -90,7 +90,7 @@ function AnnouncementsPage() {
                   <p className="text-sm text-gray-600 leading-relaxed">{a.content}</p>
                 </div>
                 <div className="flex items-center gap-1 flex-shrink-0">
-                  <button onClick={() => openEdit(a)} className="rounded-full p-2 text-blue-600 hover:bg-blue-50 transition-colors"><Pencil className="h-4 w-4" /></button>
+                  <button onClick={() => openEdit(a)} className="rounded-full p-2 text-primary-600 hover:bg-primary-50 transition-colors"><Pencil className="h-4 w-4" /></button>
                   <button onClick={() => handleDelete(a.id)} className="rounded-full p-2 text-red-600 hover:bg-red-50 transition-colors"><Trash2 className="h-4 w-4" /></button>
                 </div>
               </div>

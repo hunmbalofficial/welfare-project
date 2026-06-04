@@ -2,10 +2,10 @@ import { HiUsers, HiFolder, HiHeart, HiMail } from 'react-icons/hi';
 
 const DashboardCards = ({ stats }) => {
   const cards = [
-    { label: 'Total Projects', value: stats?.projects || 0, icon: HiFolder, color: 'bg-blue-500' },
-    { label: 'Total Donations', value: stats?.donations || 0, icon: HiHeart, color: 'bg-red-500' },
-    { label: 'Gallery Images', value: stats?.gallery || 0, icon: HiUsers, color: 'bg-green-500' },
-    { label: 'New Messages', value: stats?.messages || 0, icon: HiMail, color: 'bg-yellow-500' },
+    { label: 'Total Projects', value: stats?.projects || 0, icon: HiFolder, color: 'bg-primary-600' },
+    { label: 'Total Donations', value: stats?.donations || 0, icon: HiHeart, color: 'bg-primary-500' },
+    { label: 'Gallery Images', value: stats?.gallery || 0, icon: HiUsers, color: 'bg-primary-400' },
+    { label: 'New Messages', value: stats?.messages || 0, icon: HiMail, color: 'bg-primary-700' },
   ];
 
   return (

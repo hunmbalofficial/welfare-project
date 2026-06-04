@@ -29,9 +29,9 @@ const impactNumbers = [
 ];
 
 const paymentOptions = [
-  { value: 'jazzcash', label: 'JazzCash', icon: Smartphone, desc: 'Send via JazzCash app', number: '0300-1234567', barColor: 'bg-orange-500', bgLight: 'bg-orange-50', borderLight: 'border-orange-200', iconBg: 'bg-orange-100', iconColor: 'text-orange-600' },
-  { value: 'easypaisa', label: 'EasyPaisa', icon: Smartphone, desc: 'Send via EasyPaisa app', number: '0300-7654321', barColor: 'bg-green-500', bgLight: 'bg-green-50', borderLight: 'border-green-200', iconBg: 'bg-green-100', iconColor: 'text-green-600' },
-  { value: 'bank', label: 'Bank Transfer', icon: Landmark, desc: 'Direct bank transfer', number: 'Account: 1234-5678-9012', barColor: 'bg-blue-500', bgLight: 'bg-blue-50', borderLight: 'border-blue-200', iconBg: 'bg-blue-100', iconColor: 'text-blue-600' },
+  { value: 'jazzcash', label: 'JazzCash', icon: Smartphone, desc: 'Send via JazzCash app', number: '0300-1234567', barColor: 'bg-primary-700', bgLight: 'bg-primary-50', borderLight: 'border-primary-100', iconBg: 'bg-primary-100', iconColor: 'text-primary-700' },
+  { value: 'easypaisa', label: 'EasyPaisa', icon: Smartphone, desc: 'Send via EasyPaisa app', number: '0300-7654321', barColor: 'bg-primary-600', bgLight: 'bg-primary-50', borderLight: 'border-primary-100', iconBg: 'bg-primary-100', iconColor: 'text-primary-600' },
+  { value: 'bank', label: 'Bank Transfer', icon: Landmark, desc: 'Direct bank transfer', number: 'Account: 1234-5678-9012', barColor: 'bg-primary-500', bgLight: 'bg-primary-50', borderLight: 'border-primary-100', iconBg: 'bg-primary-100', iconColor: 'text-primary-500' },
 ];
 
 const donationSchema = z.object({
@@ -446,7 +446,7 @@ const Donate = () => {
                 <p className="text-primary-100 text-sm mb-4">Join thousands of supporters making a difference every day.</p>
                 <div className="flex items-center gap-4 text-white">
                   <div className="flex -space-x-2">
-                    {['#1A72B8', '#2B86C5', '#4F9AD6', '#8DBFE8'].map((color, i) => (
+                    {['#2E9B4E', '#4AAD68', '#6DBF86', '#A8DCB7'].map((color, i) => (
                       <div key={i} className="w-8 h-8 rounded-full border-2 border-white" style={{ backgroundColor: color }} />
                     ))}
                   </div>

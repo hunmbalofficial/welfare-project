@@ -237,19 +237,19 @@ function WebsiteSettingsPage() {
   };
 
   const tabIcons = {
-    general: 'bg-primary-50',
-    social: 'bg-blue-50',
-    homepage: 'bg-amber-50',
-    contact: 'bg-green-50',
-    maintenance: 'bg-purple-50',
+    general: 'bg-primary-100',
+    social: 'bg-primary-100',
+    homepage: 'bg-primary-100',
+    contact: 'bg-primary-100',
+    maintenance: 'bg-primary-100',
   };
 
   const tabColors = {
-    general: 'text-primary-600',
-    social: 'text-blue-600',
-    homepage: 'text-amber-600',
-    contact: 'text-green-600',
-    maintenance: 'text-purple-600',
+    general: 'text-primary-700',
+    social: 'text-primary-700',
+    homepage: 'text-primary-700',
+    contact: 'text-primary-700',
+    maintenance: 'text-primary-700',
   };
 
   const iconMap = {

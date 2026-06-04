@@ -81,7 +81,7 @@ function StaffManagementPage() {
                     <td className="px-4 py-3 text-gray-500">{s.lastLogin === '-' ? '-' : formatDate(s.lastLogin)}</td>
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-2">
-                        <button className="rounded-full p-1.5 text-blue-600 hover:bg-blue-50 transition-colors"><Pencil className="h-4 w-4" /></button>
+                        <button className="rounded-full p-1.5 text-primary-600 hover:bg-primary-50 transition-colors"><Pencil className="h-4 w-4" /></button>
                         <button onClick={() => handleDelete(s.id)} className="rounded-full p-1.5 text-red-600 hover:bg-red-50 transition-colors"><Trash2 className="h-4 w-4" /></button>
                       </div>
                     </td>

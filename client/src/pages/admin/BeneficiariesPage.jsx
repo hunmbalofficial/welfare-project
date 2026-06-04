@@ -247,7 +247,7 @@ function BeneficiariesPage() {
                         <td className="px-4 py-3 text-gray-500 text-xs hidden lg:table-cell">{formatDate(b.date)}</td>
                         <td className="px-4 py-3">
                           <div className="flex items-center gap-1">
-                            <button onClick={() => openEdit(b)} className="rounded-full p-1.5 text-blue-600 hover:bg-blue-50 transition-colors" title="Edit">
+                            <button onClick={() => openEdit(b)} className="rounded-full p-1.5 text-primary-600 hover:bg-primary-50 transition-colors" title="Edit">
                               <Pencil className="h-4 w-4" />
                             </button>
                             <button onClick={() => setDeleteTarget(b)} className="rounded-full p-1.5 text-red-500 hover:bg-red-50 transition-colors" title="Delete">

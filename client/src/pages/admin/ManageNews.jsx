@@ -101,7 +101,7 @@ function ManageNews() {
                     </td>
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-2">
-                        <button onClick={() => openEdit(item)} className="rounded-full p-1.5 text-blue-600 hover:bg-blue-50 transition-colors"><Pencil className="h-4 w-4" /></button>
+                        <button onClick={() => openEdit(item)} className="rounded-full p-1.5 text-primary-600 hover:bg-primary-50 transition-colors"><Pencil className="h-4 w-4" /></button>
                         <button onClick={() => handleDelete(item.id)} className="rounded-full p-1.5 text-red-600 hover:bg-red-50 transition-colors"><Trash2 className="h-4 w-4" /></button>
                       </div>
                     </td>
