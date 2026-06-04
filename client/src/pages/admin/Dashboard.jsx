@@ -101,7 +101,7 @@ function Dashboard() {
                 <XAxis dataKey="month" tick={{ fontSize: 12 }} />
                 <YAxis tick={{ fontSize: 12 }} />
                 <Tooltip />
-                <Bar dataKey="donations" fill="#3B6D11" radius={[6, 6, 0, 0]} />
+                <Bar dataKey="donations" fill="#1A72B8" radius={[6, 6, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </Card>
@@ -116,7 +116,7 @@ function Dashboard() {
                 <XAxis dataKey="month" tick={{ fontSize: 12 }} />
                 <YAxis tick={{ fontSize: 12 }} />
                 <Tooltip />
-                <Line type="monotone" dataKey="amount" stroke="#3B6D11" strokeWidth={2} dot={{ fill: '#3B6D11' }} />
+                <Line type="monotone" dataKey="amount" stroke="#1A72B8" strokeWidth={2} dot={{ fill: '#1A72B8' }} />
               </LineChart>
             </ResponsiveContainer>
           </Card>

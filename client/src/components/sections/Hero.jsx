@@ -98,9 +98,9 @@ const Hero = () => {
               className="flex items-center gap-8 pt-4 border-t border-primary-100"
             >
               {[
-                { icon: Users, value: '1,200+', label: 'Families Helped' },
-                { icon: Shield, value: '45', label: 'Active Programs' },
-                { icon: Heart, value: '12+', label: 'Years of Service' },
+                { icon: Users, value: '1,200+', label: 'Families Helped', color: 'text-yw-blue' },
+                { icon: Shield, value: '45', label: 'Active Programs', color: 'text-yw-green' },
+                { icon: Heart, value: '12+', label: 'Years of Service', color: 'text-yw-amber' },
               ].map((stat, i) => (
                 <motion.div
                   key={i}
@@ -108,7 +108,7 @@ const Hero = () => {
                   className="flex items-center gap-3 cursor-default"
                 >
                   <div className="w-10 h-10 rounded-lg bg-primary-100 flex items-center justify-center shrink-0 group-hover:bg-primary-200 transition-colors">
-                    <stat.icon size={18} className="text-primary-600" />
+                    <stat.icon size={18} className={stat.color} />
                   </div>
                   <div>
                     <span className="block font-bold text-primary-900 leading-tight">{stat.value}</span>
@@ -155,9 +155,9 @@ const Hero = () => {
                       </div>
                     </div>
                     <div className="flex gap-3">
-                      <span className="px-3 py-1 rounded-full bg-white/20 text-white text-xs font-medium backdrop-blur-sm border border-white/10">Education</span>
-                      <span className="px-3 py-1 rounded-full bg-white/20 text-white text-xs font-medium backdrop-blur-sm border border-white/10">Healthcare</span>
-                      <span className="px-3 py-1 rounded-full bg-white/20 text-white text-xs font-medium backdrop-blur-sm border border-white/10">Community</span>
+                      <span className="px-3 py-1 rounded-full bg-yw-green/80 text-white text-xs font-medium backdrop-blur-sm border border-white/10">Education</span>
+                      <span className="px-3 py-1 rounded-full bg-yw-red/80 text-white text-xs font-medium backdrop-blur-sm border border-white/10">Healthcare</span>
+                      <span className="px-3 py-1 rounded-full bg-yw-amber/80 text-white text-xs font-medium backdrop-blur-sm border border-white/10">Community</span>
                     </div>
                   </motion.div>
                 </div>

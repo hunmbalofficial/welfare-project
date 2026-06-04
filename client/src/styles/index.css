@@ -5,30 +5,30 @@
 @tailwind utilities;
 
 :root {
-  --color-primary-950: #0d1f05;
-  --color-primary-900: #173404;
-  --color-primary-800: #27500A;
-  --color-primary-700: #3B6D11;
-  --color-primary-600: #639922;
-  --color-primary-500: #7ab82a;
-  --color-primary-400: #97C459;
-  --color-primary-200: #C0DD97;
-  --color-primary-100: #EAF3DE;
-  --color-primary-50: #f5faf0;
+  --color-primary-950: #071A2E;
+  --color-primary-900: #0B2A47;
+  --color-primary-800: #10426B;
+  --color-primary-700: #155A94;
+  --color-primary-600: #1A72B8;
+  --color-primary-500: #2B86C5;
+  --color-primary-400: #4F9AD6;
+  --color-primary-200: #C5DFF5;
+  --color-primary-100: #EAF2FB;
+  --color-primary-50: #F5F7FF;
   --color-neutral-900: #1a1a1a;
   --color-neutral-700: #3d3d3d;
   --color-neutral-500: #6b6b6b;
   --color-neutral-300: #c4c4c4;
   --color-neutral-100: #f5f5f5;
   --color-neutral-50: #fafafa;
-  --color-success: #27500A;
-  --color-warning: #BA7517;
-  --color-danger: #A32D2D;
-  --color-info: #185FA5;
+  --color-success: #2E9B4E;
+  --color-warning: #F4A320;
+  --color-danger: #D92B2B;
+  --color-info: #1A72B8;
   --text-primary: #1a1a1a;
   --text-secondary: #3d3d3d;
   --text-muted: #6b6b6b;
-  --text-on-green: #ffffff;
+  --text-on-primary: #ffffff;
   --font-display: 'Playfair Display', serif;
   --font-body: 'DM Sans', sans-serif;
 }
@@ -72,7 +72,7 @@
 
   .card-hover:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 32px rgba(39, 80, 10, 0.12);
+    box-shadow: 0 12px 32px rgba(21, 90, 148, 0.12);
   }
 
   .fade-up {

@@ -446,7 +446,7 @@ const Donate = () => {
                 <p className="text-primary-100 text-sm mb-4">Join thousands of supporters making a difference every day.</p>
                 <div className="flex items-center gap-4 text-white">
                   <div className="flex -space-x-2">
-                    {['#3B6D11', '#639922', '#97C459', '#C0DD97'].map((color, i) => (
+                    {['#1A72B8', '#2B86C5', '#4F9AD6', '#8DBFE8'].map((color, i) => (
                       <div key={i} className="w-8 h-8 rounded-full border-2 border-white" style={{ backgroundColor: color }} />
                     ))}
                   </div>
